@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+# Make the gethostname call return a different value
+#
+
+# If you set the following value to the location of your 
+# libfakehostname.so.1, it'll use that as the path -- otherwise,
+# it'll do a best effort to find an installed version
+#
+# LIBFAKE_LOCATION=/usr/local/lib/libfakehostname.so.1
+
+# ----------------------------------
+# no configuration below this point
+
+if [ $# -lt 2 ]; then
+    echo "usage: $0 <pretend-hostname> <command> [command-args]"
+    exit 1
+fi
+
+# try to find where the library is installed
+
+if [ -z "$LIBFAKE_LOCATION" ]; then
+    if [ -f $( dirname $0 )/libfakehostname.so.1 ]; then
+        LIBFAKE_LOCATION=$( dirname $0 )/libfakehostname.so.1
+    elif [[ $( dirname $0 ) =~ 'bin' ]]; then
+        if [ -f $( dirname $( dirname $0 ) )/lib/libfakehostname.so.1 ]; then
+            LIBFAKE_LOCATION=$( dirname $( dirname $0 ) )/lib/libfakehostname.so.1
+        fi
+    elif ldconfig -p | grep -q libfakehostname.so.1; then
+        LIBFAKE_LOCATION=$( ldconfig -p | grep libfakehostname.so.1 | head -n 1 | awk '{ print $4 }' )
+    elif locate -q libfakehostname.so.1 >/dev/null 2>&1; then
+        LIBFAKE_LOCATION=$( locate libfakehostname.so.1 | head -n 1 )
+    else
+        echo "Can't find libfakehostname.so.1, I really tried"
+    fi
+fi
+
+if [ -z "$LIBFAKE_LOCATION" ]; then
+    echo "ERROR: Cannot find libfakehostname.so.1, set \$LIBFAKE_LOCATION in $0"
+    exit 1
+fi
+
+export LD_PRELOAD=$LIBFAKE_LOCATION
+export MYHOSTNAME=$1
+shift
+exec $*
