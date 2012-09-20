@@ -1,6 +1,6 @@
 Name:		fakehostname
 Version:	0.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Wrap a command so that gethostname(2) returns something else
 
 Group:		System Environment/Libraries
@@ -20,7 +20,7 @@ variable so that you can fake the hostname that applications see. This can
 be useful for testing, or for fixing broken software which can't be rewritten.
 
 %prep
-cp $RPM_SOURCE_DIR/* $RPM_BUILD_DIR
+cp %{SOURCE0} %{SOURCE1} %{SOURCE2} $RPM_BUILD_DIR
 
 %build
 make %{?_smp_mflags}
