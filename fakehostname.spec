@@ -1,5 +1,5 @@
 Name:		fakehostname
-Version:	0.1
+Version:	0.2
 Release:	1%{?dist}
 Summary:	Wrap a command so that gethostname(2) returns something else
 
@@ -36,6 +36,8 @@ make install BINDIR=$RPM_BUILD_ROOT/%{_bindir} LIBDIR=$RPM_BUILD_ROOT/%{_libdir}
 %attr(0755,root,root)	%{_libdir}/libfakehostname.so.1
 
 %changelog
+* Thu Sep 20 2012 Colin Panisset <nonspecialist@clabber.com> 0.2-1
+- make fakehostname wrapper try other locations for library
 * Tue Sep 18 2012 Colin Panisset <nonspecialist@clabber.com> 0.1-1
 - initial version of the package
 - wrapper shell script and shared library
