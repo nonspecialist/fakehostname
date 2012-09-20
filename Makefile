@@ -15,7 +15,7 @@ example: all
 	$(PWD)/fakehostname THIS-IS-A-TEST
 
 clean:
-	rm libfakehostname.so.1 HostnameApp.class
+	-rm libfakehostname.so.1 HostnameApp.class
 
 sources:
 	/bin/true
