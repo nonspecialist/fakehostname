@@ -6,8 +6,8 @@ An example override of the libc function gethostname(2).
 How do I use it?
 ================
 
-* build the shared library (`make`)
-* install it somewhere (`make install`)
+* build the shared library (`make`) or the RPM (`make rpm`)
+* install it somewhere (`make install`) or (`rpm -ivh .../path/to/new-rpm`)
 * either:
   * set the installed shared library to be loaded prior to libc
     (`export LD_PRELOAD=/path/to/shared/library.so.1`)
