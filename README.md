@@ -1,7 +1,7 @@
 What is this?
 =============
 
-An example override of the libc function gethostname(2).
+An example override of the libc function [`gethostname(2)`](https://linux.die.net/man/2/gethostname).
 
 How do I use it?
 ================
@@ -18,7 +18,7 @@ How do I use it?
   * use the included `fakehostname` wrapper to launch your application
 
 If you don't set `$MYHOSTNAME`, the actual hostname returned by the 
-real gethostname(2) call will be used
+real [`gethostname(2)`](https://linux.die.net/man/2/gethostname) call will be used
 
 Wrapper Script
 ==============
