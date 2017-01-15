@@ -20,14 +20,14 @@ fi
 # try to find where the library is installed
 
 if [ -z "$LIBFAKE_LOCATION" ]; then
-    if [ -f $( dirname $0 )/libfakehostname.so.1 ]; then
-        LIBFAKE_LOCATION=$( dirname $0 )/libfakehostname.so.1
-    elif [[ $( dirname $0 ) =~ 'bin' ]]; then
-        DIR=$( dirname $0 )
-        if [ -f $( dirname $DIR )/lib/libfakehostname.so.1 ]; then
-            LIBFAKE_LOCATION=$( dirname $DIR )/lib/libfakehostname.so.1
-        elif [ -f $( dirname $DIR )/lib64/libfakehostname.so.1 ]; then
-            LIBFAKE_LOCATION=$( dirname $DIR )/lib64/libfakehostname.so.1
+    if [ -f "$( dirname "$0" )/libfakehostname.so.1" ]; then
+        LIBFAKE_LOCATION="$( dirname "$0" )/libfakehostname.so.1"
+    elif [[ "$( dirname "$0" )" =~ bin ]]; then
+        DIR="$( dirname "$0" )"
+        if [ -f "$( dirname "$DIR" )/lib/libfakehostname.so.1" ]; then
+            LIBFAKE_LOCATION="$( dirname "$DIR" )/lib/libfakehostname.so.1"
+        elif [ -f "$( dirname "$DIR" )/lib64/libfakehostname.so.1" ]; then
+            LIBFAKE_LOCATION="$( dirname "$DIR" )/lib64/libfakehostname.so.1"
         fi
     elif ldconfig -p | grep -q libfakehostname.so.1; then
         LIBFAKE_LOCATION=$( ldconfig -p | grep libfakehostname.so.1 | head -n 1 | awk '{ print $4 }' )
@@ -43,7 +43,7 @@ if [ -z "$LIBFAKE_LOCATION" ]; then
     exit 1
 fi
 
-export LD_PRELOAD=$LIBFAKE_LOCATION
-export MYHOSTNAME=$1
+export LD_PRELOAD="$LIBFAKE_LOCATION"
+export MYHOSTNAME="$1"
 shift
-exec $*
+exec "$@"
